@@ -1,52 +1,41 @@
 package ru.neustupov.model.helloworld;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import ru.neustupov.util.HibernateUtil;
 
 public class HelloWorldJPA {
 
     public static void main(String[] args) {
 
-        // Start EntityManagerFactory
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("HelloWorldPU");
-
-        // Save Message
-        // Create EntityManager, create transaction
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-
         // Create message, save message
         Message message = new Message();
         message.setText("Hello World with JPA");
-        em.persist(message);
 
-        // Close transaction and entityManager
-        tx.commit();
-        em.close();
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // save objects
+            session.save(message);
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
 
-        // Load Messages
-        // Create new EntityManager and Transaction
-        EntityManager newEm = emf.createEntityManager();
-        EntityTransaction newTx = newEm.getTransaction();
-        newTx.begin();
-
-        // Load list of Messages
-        List messages =
-                newEm.createQuery("select m from Message m").getResultList(); // SELECT * from MESSAGE
-
-        System.out.println( messages.size() + " message(s) found:" );
-
-        messages.forEach(System.out::print);
-
-        newTx.commit();
-        newEm.close();
-
-        // Shutting down the application
-        emf.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            List < Message > messages = session.createQuery("from Message", Message.class).list();
+            messages.forEach(s -> System.out.println(s.getText()));
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
     }
 }
