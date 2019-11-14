@@ -1,5 +1,6 @@
 package ru.neustupov.model.simple;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -20,6 +21,7 @@ public class Item {
   @Id
   @GeneratedValue
   private Long id;
+
   @NotNull
   @Size(
       min = 2,
@@ -27,8 +29,12 @@ public class Item {
       message = "min = 2, max = 255"
   )
   protected String name;
+
+  private BigDecimal initialPrice;
+
   @Future
   protected Date auctionEnd;
+
   private Set<Bid> bids = new HashSet<>();
 
   public Set<Bid> getBids() {
@@ -44,5 +50,13 @@ public class Item {
     }
     getBids().add(bid);
     bid.setItem(this);
+  }
+
+  public BigDecimal getInitialPrice() {
+    return initialPrice;
+  }
+
+  public void setInitialPrice(BigDecimal initialPrice) {
+    this.initialPrice = initialPrice;
   }
 }

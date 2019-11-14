@@ -12,7 +12,12 @@ public class User implements Serializable {
   @Id
   @GeneratedValue
   private Long id;
+
   protected String username;
+
+  private String firstname;
+
+  private String lastname;
 
   public User() {
   }
@@ -23,6 +28,22 @@ public class User implements Serializable {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public String getFirstname() {
+    return firstname;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  public String getLastname() {
+    return lastname;
+  }
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
   }
 
   public BigDecimal calcShippingCosts(Address fromLocation){
