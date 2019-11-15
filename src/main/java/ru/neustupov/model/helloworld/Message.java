@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Message {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "ID_GENERATOR")
     private Long id;
 
     private String text;
@@ -16,7 +16,11 @@ public class Message {
     public Message() {
     }
 
-    public String getText() {
+  public Long getId() {
+    return id;
+  }
+
+  public String getText() {
         return text;
     }
 

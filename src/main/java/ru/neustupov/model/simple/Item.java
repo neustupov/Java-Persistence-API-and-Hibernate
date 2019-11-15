@@ -13,13 +13,17 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@DynamicInsert
+@DynamicUpdate
 public class Item {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(generator = "ID_GENERATOR")
   private Long id;
 
   @NotNull
@@ -36,6 +40,10 @@ public class Item {
   protected Date auctionEnd;
 
   private Set<Bid> bids = new HashSet<>();
+
+  public Long getId() {
+    return id;
+  }
 
   public Set<Bid> getBids() {
     return Collections.unmodifiableSet(bids);

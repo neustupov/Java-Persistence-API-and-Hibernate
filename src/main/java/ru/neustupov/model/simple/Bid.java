@@ -5,12 +5,14 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import org.hibernate.annotations.Immutable;
 
 @Entity
+@Immutable
 public class Bid {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(generator = "ID_GENERATOR")
   private Long id;
 
   private BigDecimal amount;
@@ -25,6 +27,10 @@ public class Bid {
   public Bid(Item item) {
     this.item = item;
     item.getBids().add(this);
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public Item getItem() {

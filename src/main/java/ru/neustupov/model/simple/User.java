@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class User implements Serializable {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(generator = "ID_GENERATOR")
   private Long id;
 
   protected String username;
@@ -20,6 +20,10 @@ public class User implements Serializable {
   private String lastname;
 
   public User() {
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public String getUsername() {

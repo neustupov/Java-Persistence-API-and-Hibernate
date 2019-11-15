@@ -35,7 +35,7 @@ class HelloWorldJPATest {
   void main() {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
       List< Message > messages = session.createQuery("from Message", Message.class).list();
-      messages.forEach(s -> System.out.println(s.getText()));
+      messages.forEach(s -> System.out.println(s.getId() + " " + s.getText()));
       assertEquals(messages.size(), 1);
       assertEquals(messages.get(0).getText(),"Hello World with JPA");
     } catch (Exception e) {

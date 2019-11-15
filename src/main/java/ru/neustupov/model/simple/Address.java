@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Address {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(generator = "ID_GENERATOR")
   private Long id;
 
   private String street;
@@ -16,6 +16,10 @@ public class Address {
   private String zipcode;
 
   private String city;
+
+  public Long getId() {
+    return id;
+  }
 
   public String getStreet() {
     return street;
