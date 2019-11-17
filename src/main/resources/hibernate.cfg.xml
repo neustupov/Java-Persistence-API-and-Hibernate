@@ -25,5 +25,10 @@
     <property name="hibernate.dbcp.minIdle">5</property>
     <property name="hibernate.dbcp.maxWaitMillis">-1</property>
     <mapping class="ru.neustupov.model.helloworld.Message" />
+    <mapping class="ru.neustupov.model.simple.Address" />
+    <mapping class="ru.neustupov.model.simple.Bid" />
+    <mapping class="ru.neustupov.model.simple.Item" />
+    <mapping class="ru.neustupov.model.simple.User" />
+    <mapping class="ru.neustupov.model.advanced.ItemBidSummary" />
   </session-factory>
 </hibernate-configuration>

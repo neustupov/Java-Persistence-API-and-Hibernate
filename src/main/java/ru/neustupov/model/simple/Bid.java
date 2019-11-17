@@ -29,6 +29,12 @@ public class Bid {
     item.getBids().add(this);
   }
 
+  public Bid(BigDecimal amount, Date createdOn, Item item) {
+    this.amount = amount;
+    this.createdOn = createdOn;
+    this.item = item;
+  }
+
   public Long getId() {
     return id;
   }
