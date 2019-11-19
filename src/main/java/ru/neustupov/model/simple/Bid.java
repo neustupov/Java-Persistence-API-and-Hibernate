@@ -2,9 +2,16 @@ package ru.neustupov.model.simple;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Immutable;
 
 @Entity
@@ -19,6 +26,12 @@ public class Bid {
 
   private Date createdOn;
 
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(insertable = false, updatable = false)
+  @Generated(GenerationTime.ALWAYS)
+  private Date lastModified;
+
+  @ManyToOne(fetch= FetchType.EAGER)
   private Item item;
 
   public Bid() {

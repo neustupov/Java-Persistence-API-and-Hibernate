@@ -1,24 +1,32 @@
 package ru.neustupov.model.simple;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
-@Entity
+@Embeddable
 public class Address {
 
-  @Id
-  @GeneratedValue(generator = "ID_GENERATOR")
-  private Long id;
-
+  @NotNull
+  @Column(nullable = false)
   private String street;
 
+  @NotNull
+  @Column(nullable = false, length = 5)
   private String zipcode;
 
+  @NotNull
+  @Column(nullable = false)
   private String city;
 
-  public Long getId() {
-    return id;
+  public Address() {
+  }
+
+  public Address(@NotNull String street,
+      @NotNull String zipcode, @NotNull String city) {
+    this.street = street;
+    this.zipcode = zipcode;
+    this.city = city;
   }
 
   public String getStreet() {
